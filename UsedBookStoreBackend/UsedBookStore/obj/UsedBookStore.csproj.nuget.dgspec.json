@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Coder\\Code\\UsedBookStore\\UsedBookStoreBackend\\UsedBookStore\\UsedBookStore.csproj": {}
+    "D:\\Coder\\Code\\UserBookStories\\UsedBookStoreBackend\\UsedBookStore\\UsedBookStore.csproj": {}
   },
   "projects": {
-    "D:\\Coder\\Code\\UsedBookStore\\UsedBookStoreBackend\\UsedBookStore\\UsedBookStore.csproj": {
+    "D:\\Coder\\Code\\UserBookStories\\UsedBookStoreBackend\\UsedBookStore\\UsedBookStore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Coder\\Code\\UsedBookStore\\UsedBookStoreBackend\\UsedBookStore\\UsedBookStore.csproj",
+        "projectUniqueName": "D:\\Coder\\Code\\UserBookStories\\UsedBookStoreBackend\\UsedBookStore\\UsedBookStore.csproj",
         "projectName": "UsedBookStore",
-        "projectPath": "D:\\Coder\\Code\\UsedBookStore\\UsedBookStoreBackend\\UsedBookStore\\UsedBookStore.csproj",
+        "projectPath": "D:\\Coder\\Code\\UserBookStories\\UsedBookStoreBackend\\UsedBookStore\\UsedBookStore.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Coder\\Code\\UsedBookStore\\UsedBookStoreBackend\\UsedBookStore\\obj\\",
+        "outputPath": "D:\\Coder\\Code\\UserBookStories\\UsedBookStoreBackend\\UsedBookStore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
