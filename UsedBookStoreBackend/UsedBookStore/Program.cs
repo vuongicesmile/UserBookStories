@@ -1,7 +1,6 @@
 using Autofac.Core;
 using Microsoft.EntityFrameworkCore;
 using UsedBookStore.DataAccess.Contexts;
-using UsedBookStore.DataAccess.Interface;
 using UsedBookStore.DataAccess.Repositories;
 using UsedBookStore.Infrastructure.Interface;
 using UsedBookStore.Infrastructure.Services;
@@ -19,10 +18,15 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<EfContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("EfContextConnectionStrings")));
+
+
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
+
 
 // automapper config
 builder.Services.AddAutoMapper(typeof(Program));
+
+builder.Services.AddScoped<ICategoriesRepository, SQLCategoriesRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

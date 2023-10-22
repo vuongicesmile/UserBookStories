@@ -1,9 +1,11 @@
 ﻿using Faker;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UsedBookStore.DataAccess.Contexts;
 using UsedBookStore.DataAccess.DTOs;
 using UsedBookStore.DataAccess.Entities;
+using UsedBookStore.DataAccess.Repositories;
 
 namespace UsedBookStore.Controllers
 {
@@ -12,17 +14,20 @@ namespace UsedBookStore.Controllers
     public class CategoryController : ControllerBase
     {
         private readonly EfContext dbContext;
-        public CategoryController(EfContext dbContext)
+        private readonly ICategoriesRepository categoriesRepository;
+        public CategoryController(EfContext dbContext, ICategoriesRepository categoriesRepository)
         {
             this.dbContext = dbContext;
+            this.categoriesRepository = categoriesRepository;
         }
         // GET ALL CATEGORIES
         // GET : https://localhost://portnumber/api/category
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
             // Get Data from Database - Domain models
-            var categoriesDomain = dbContext.Categories.ToList();
+            //var categoriesDomain =await dbContext.Categories.ToListAsync();
+            var categoriesDomain =await categoriesRepository.GetAllAsync();
 
             //Map Domain Models to DTOs
             var regionsDto = new List<CategoriesDTO>();
@@ -41,11 +46,11 @@ namespace UsedBookStore.Controllers
         // GET : https://localhost://portnumber/api/category/{id}
         [HttpGet]
         [Route("{id:}")]
-        public IActionResult GetById([FromRoute] int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             //var category =  dbContext.Categories.Find(id);
             // get region domain modal from database
-            var categoryDomain = dbContext.Categories.FirstOrDefault(c => c.Id == id);
+            var categoryDomain =await dbContext.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
             if (categoryDomain == null)
             {
@@ -64,7 +69,7 @@ namespace UsedBookStore.Controllers
         //POST To create new categories
         //POST : https://localhost:portnumber/api/categories
         [HttpPost]
-        public IActionResult Create([FromBody] AddRequestCategories addRequestCategories)
+        public async Task<IActionResult> Create([FromBody] AddRequestCategories addRequestCategories)
         {
             //Map or convert DTO to domain Model
             var categoriesDomainModel = new Categories
@@ -73,8 +78,8 @@ namespace UsedBookStore.Controllers
             };
 
             // use Domain Modal to create Categories
-            dbContext.Categories.Add(categoriesDomainModel);
-            dbContext.SaveChanges();
+            await dbContext.Categories.AddAsync(categoriesDomainModel);
+            await dbContext.SaveChangesAsync();
 
             // Map domain modal back to DTO 
             var categoriesDto = new CategoriesDTO
@@ -91,10 +96,10 @@ namespace UsedBookStore.Controllers
         [HttpPut]
         [Route("{id:}")]
 
-        public IActionResult Update([FromRoute] int id, [FromBody] UpdateCategoriesDTO updateCategoriesDTO)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCategoriesDTO updateCategoriesDTO)
         {
             // check if categories exits
-            var categoriesDomainModel = dbContext.Categories.FirstOrDefault(c => c.Id == id);
+            var categoriesDomainModel =await dbContext.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
             if (categoriesDomainModel == null)
             {
@@ -102,7 +107,7 @@ namespace UsedBookStore.Controllers
             }
             // Map DTO to domain model 
             categoriesDomainModel.Name = updateCategoriesDTO.Name;
-            dbContext.SaveChanges();
+            await dbContext.SaveChangesAsync();
 
             // convert Domain Model to DTO
             var categoryDTO = new CategoriesDTO
@@ -117,9 +122,9 @@ namespace UsedBookStore.Controllers
         // Delete : https://localhost:portnumber/api/categories/{id}
         [HttpDelete]
         [Route("{id:}")]
-        public IActionResult Delete([FromRoute] int id)
+        public async  Task<IActionResult> Delete([FromRoute] int id)
         {
-            var categoryDomainModel = dbContext.Categories.FirstOrDefault(x => x.Id == id);
+            var categoryDomainModel =await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
 
             if (categoryDomainModel == null)
             {
