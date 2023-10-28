@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using UsedBookStore.DataAccess.Contexts;
 using UsedBookStore.DataAccess.Repositories;
 using UsedBookStore.Infrastructure.Interface;
+using UsedBookStore.Infrastructure.Mappings;
 using UsedBookStore.Infrastructure.Services;
 using UsedBookStore.Infrastructure.Uow;
 
@@ -23,10 +24,14 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("EfContextConnect
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 
-// automapper config
-builder.Services.AddAutoMapper(typeof(Program));
-
 builder.Services.AddScoped<ICategoriesRepository, SQLCategoriesRepository>();
+
+
+
+// automapper config
+//inject auto mapper config
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

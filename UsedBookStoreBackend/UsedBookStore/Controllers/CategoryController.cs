@@ -1,4 +1,5 @@
-﻿using Faker;
+﻿using AutoMapper;
+using Faker;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,12 @@ namespace UsedBookStore.Controllers
     {
         private readonly EfContext dbContext;
         private readonly ICategoriesRepository categoriesRepository;
-        public CategoryController(EfContext dbContext, ICategoriesRepository categoriesRepository)
+        private readonly IMapper mapper;
+        public CategoryController(EfContext dbContext, ICategoriesRepository categoriesRepository, IMapper mapper)
         {
             this.dbContext = dbContext;
             this.categoriesRepository = categoriesRepository;
+            this.mapper = mapper;
         }
         // GET ALL CATEGORIES
         // GET : https://localhost://portnumber/api/category
@@ -27,19 +30,25 @@ namespace UsedBookStore.Controllers
         {
             // Get Data from Database - Domain models
             //var categoriesDomain =await dbContext.Categories.ToListAsync();
-            var categoriesDomain =await categoriesRepository.GetAllAsync();
 
             //Map Domain Models to DTOs
-            var regionsDto = new List<CategoriesDTO>();
-            foreach (var category in categoriesDomain)
-            {
-                regionsDto.Add(new CategoriesDTO()
-                {
-                    Id = category.Id,
-                    Name = category.Name,
-                });
-            }
-            return Ok(regionsDto);
+            //-------------------------------
+            //var regionsDto = new List<CategoriesDTO>();
+            //foreach (var category in categoriesDomain)
+            //{
+            //    regionsDto.Add(new CategoriesDTO()
+            //    {
+            //        Id = category.Id,
+            //        Name = category.Name,
+            //    });
+            //}
+            //var categoriesDto = mapper.Map<List<CategoriesDTO>>(categoriesDomain);
+            //--------------------------------------
+            //Get data from database - domain models
+
+            var categoriesDomain = await categoriesRepository.GetAllAsync();
+            // Return Dtos
+            return Ok(mapper.Map<List<CategoriesDTO>>(categoriesDomain));
         }
 
         // GET SINGLE CATEGORY  (get category by ID)
@@ -50,7 +59,8 @@ namespace UsedBookStore.Controllers
         {
             //var category =  dbContext.Categories.Find(id);
             // get region domain modal from database
-            var categoryDomain =await dbContext.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            //var categoryDomain =await dbContext.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            var categoryDomain = await categoriesRepository.GetByIdAsync(id);
 
             if (categoryDomain == null)
             {
@@ -58,12 +68,13 @@ namespace UsedBookStore.Controllers
             }
 
             // map/convert region domain modal to region DTO 
-            var categoriesDto = new CategoriesDTO
-            {
-                Id = categoryDomain.Id,
-                Name = categoryDomain.Name,
-            };
-            return Ok(categoriesDto);
+            //var categoriesDto = new CategoriesDTO
+            //{
+            //    Id = categoryDomain.Id,
+            //    Name = categoryDomain.Name,
+            //};
+            // return dtos back to client
+            return Ok(mapper.Map<CategoriesDTO>(categoryDomain));
         }
 
         //POST To create new categories
@@ -72,21 +83,29 @@ namespace UsedBookStore.Controllers
         public async Task<IActionResult> Create([FromBody] AddRequestCategories addRequestCategories)
         {
             //Map or convert DTO to domain Model
-            var categoriesDomainModel = new Categories
-            {
-                Name = addRequestCategories.Name,
-            };
+            //var categoriesDomainModel = new Categories
+            //{
+            //    Name = addRequestCategories.Name,
+            //};
+
+            var categoriesDomainModel = mapper.Map<Categories>(addRequestCategories);
+
 
             // use Domain Modal to create Categories
-            await dbContext.Categories.AddAsync(categoriesDomainModel);
-            await dbContext.SaveChangesAsync();
+            //await dbContext.Categories.AddAsync(categoriesDomainModel);
+            //await dbContext.SaveChangesAsync();
+
+            //---
+            categoriesDomainModel = await categoriesRepository.CreateAsync(categoriesDomainModel);
 
             // Map domain modal back to DTO 
-            var categoriesDto = new CategoriesDTO
-            {
-                Id = categoriesDomainModel.Id,
-                Name = categoriesDomainModel.Name,
-            };
+
+            var categoriesDto = mapper.Map<CategoriesDTO>(categoriesDomainModel);
+            //var categoriesDto = new CategoriesDTO
+            //{
+            //    Id = categoriesDomainModel.Id,
+            //    Name = categoriesDomainModel.Name,
+            //};
 
             return CreatedAtAction(nameof(GetById), new { id = categoriesDto.Id }, categoriesDto);
         }
@@ -98,24 +117,23 @@ namespace UsedBookStore.Controllers
 
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCategoriesDTO updateCategoriesDTO)
         {
+            // Map DTO to domain model 
+            var categoriesDomainModel = mapper.Map<Categories>(updateCategoriesDTO);
             // check if categories exits
-            var categoriesDomainModel =await dbContext.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            categoriesDomainModel =await categoriesRepository.UpdateAsync(categoriesDomainModel,id);
 
             if (categoriesDomainModel == null)
             {
                 return NotFound();
             }
-            // Map DTO to domain model 
-            categoriesDomainModel.Name = updateCategoriesDTO.Name;
-            await dbContext.SaveChangesAsync();
 
             // convert Domain Model to DTO
-            var categoryDTO = new CategoriesDTO
-            {
-                Name = updateCategoriesDTO.Name,
-            };
-
-            return Ok(categoriesDomainModel);
+            //var categoryDTO = new CategoriesDTO
+            //{
+            //    Name = updateCategoriesDTO.Name,
+            //};
+            var categoryDTO = mapper.Map<CategoriesDTO>(categoriesDomainModel);
+            return Ok(categoryDTO);
         }
 
         // Delete Categories
@@ -124,24 +142,10 @@ namespace UsedBookStore.Controllers
         [Route("{id:}")]
         public async  Task<IActionResult> Delete([FromRoute] int id)
         {
-            var categoryDomainModel =await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == id);
-
-            if (categoryDomainModel == null)
-            {
-                return NotFound();
-            }
-
-            // delete region
-            dbContext.Categories.Remove(categoryDomainModel);
-            dbContext.SaveChanges();
-
+            var categoryDomainModel =await categoriesRepository.DeleteAsync(id);
             // retun deleted categories back
             // map domain Model to DTO
-
-            var categoriesDto = new CategoriesDTO
-            { Name = categoryDomainModel.Name };
-
-            return Ok(categoriesDto);
+            return Ok(mapper.Map<CategoriesDTO>(categoryDomainModel));
 
         }
     }
