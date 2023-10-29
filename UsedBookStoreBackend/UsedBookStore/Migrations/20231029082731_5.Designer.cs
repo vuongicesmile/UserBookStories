@@ -12,8 +12,8 @@ using UsedBookStore.DataAccess.Contexts;
 namespace UsedBookStore.Migrations
 {
     [DbContext(typeof(EfContext))]
-    [Migration("20231022073251_Inital Migration")]
-    partial class InitalMigration
+    [Migration("20231029082731_5")]
+    partial class _5
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,6 +51,38 @@ namespace UsedBookStore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("UsedBookStore.DataAccess.Entities.Difficulty", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Difficulty");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("e93f05be-4b4b-48be-accf-6a517cdbe047"),
+                            Name = "Easy"
+                        },
+                        new
+                        {
+                            Id = new Guid("fd916900-429f-4102-915a-0464670c3a65"),
+                            Name = "Medium"
+                        },
+                        new
+                        {
+                            Id = new Guid("7eecec1a-1bc4-4a9c-b155-9c9380289918"),
+                            Name = "Hard"
+                        });
                 });
 
             modelBuilder.Entity("UsedBookStore.DataAccess.Entities.Product", b =>
@@ -121,6 +153,37 @@ namespace UsedBookStore.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("UsedBookStore.DataAccess.Entities.Walk", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("DifficultyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LengthInKm")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WalkImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DifficultyId");
+
+                    b.ToTable("Walks");
+                });
+
             modelBuilder.Entity("UsedBookStore.DataAccess.Entities.Product", b =>
                 {
                     b.HasOne("UsedBookStore.DataAccess.Entities.Categories", "Categories")
@@ -128,6 +191,17 @@ namespace UsedBookStore.Migrations
                         .HasForeignKey("CategoriesId");
 
                     b.Navigation("Categories");
+                });
+
+            modelBuilder.Entity("UsedBookStore.DataAccess.Entities.Walk", b =>
+                {
+                    b.HasOne("UsedBookStore.DataAccess.Entities.Difficulty", "Difficulty")
+                        .WithMany()
+                        .HasForeignKey("DifficultyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Difficulty");
                 });
 
             modelBuilder.Entity("UsedBookStore.DataAccess.Entities.Categories", b =>

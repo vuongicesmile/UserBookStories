@@ -25,6 +25,7 @@ builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 
 builder.Services.AddScoped<ICategoriesRepository, SQLCategoriesRepository>();
+builder.Services.AddScoped<IWalkRepositories, SQLWalkRepository>();
 
 
 

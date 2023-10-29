@@ -11,6 +11,10 @@ namespace UsedBookStore.Infrastructure.Mappings
             CreateMap<Categories, CategoriesDTO>().ReverseMap();
             CreateMap<AddRequestCategories, Categories>().ReverseMap();
             CreateMap<UpdateCategoriesDTO, Categories>().ReverseMap();
+            CreateMap<AddRequestWalksDto,Walk>().ReverseMap();
+            CreateMap<WalkDto,Walk>().ReverseMap();
+            CreateMap<Difficulty, DifficultyDto>().ReverseMap(); 
+            CreateMap<UpdateWalkDto, Walk>().ReverseMap();
 
             // xử lý auto mapper nếu userDTO và userDomian không giống nhau 
             /*một ví dụ về cách sử dụng AutoMapper để cấu hình quy tắc ánh xạ giữa hai đối tượng UserDTO và UserDomain, 

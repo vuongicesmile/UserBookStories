@@ -12,6 +12,7 @@ namespace UsedBookStore.DataAccess.Contexts
         public DbSet<Categories> Categories { get; set; }
 
         public DbSet<Difficulty> Difficulty { get; set; }
+        public DbSet<Walk> Walks { get; set; }
 
         // Create the structure by writing override on model creating
         protected override void OnModelCreating(ModelBuilder modelBuilder)

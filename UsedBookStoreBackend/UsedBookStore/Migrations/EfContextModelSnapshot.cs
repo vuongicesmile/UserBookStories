@@ -151,6 +151,37 @@ namespace UsedBookStore.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("UsedBookStore.DataAccess.Entities.Walk", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("DifficultyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("LengthInKm")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WalkImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DifficultyId");
+
+                    b.ToTable("Walks");
+                });
+
             modelBuilder.Entity("UsedBookStore.DataAccess.Entities.Product", b =>
                 {
                     b.HasOne("UsedBookStore.DataAccess.Entities.Categories", "Categories")
@@ -158,6 +189,17 @@ namespace UsedBookStore.Migrations
                         .HasForeignKey("CategoriesId");
 
                     b.Navigation("Categories");
+                });
+
+            modelBuilder.Entity("UsedBookStore.DataAccess.Entities.Walk", b =>
+                {
+                    b.HasOne("UsedBookStore.DataAccess.Entities.Difficulty", "Difficulty")
+                        .WithMany()
+                        .HasForeignKey("DifficultyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Difficulty");
                 });
 
             modelBuilder.Entity("UsedBookStore.DataAccess.Entities.Categories", b =>
