@@ -3,6 +3,7 @@ using Faker;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using UsedBookStore.CustomActionFilter;
 using UsedBookStore.DataAccess.Contexts;
 using UsedBookStore.DataAccess.DTOs;
 using UsedBookStore.DataAccess.Entities;
@@ -46,9 +47,15 @@ namespace UsedBookStore.Controllers
             //--------------------------------------
             //Get data from database - domain models
 
-            var categoriesDomain = await categoriesRepository.GetAllAsync();
-            // Return Dtos
-            return Ok(mapper.Map<List<CategoriesDTO>>(categoriesDomain));
+            if(ModelState.IsValid)
+            {
+
+                var categoriesDomain = await categoriesRepository.GetAllAsync();
+                // Return Dtos
+                return Ok(mapper.Map<List<CategoriesDTO>>(categoriesDomain));
+            }
+            else { return BadRequest(ModelState); }
+
         }
 
         // GET SINGLE CATEGORY  (get category by ID)
@@ -80,6 +87,7 @@ namespace UsedBookStore.Controllers
         //POST To create new categories
         //POST : https://localhost:portnumber/api/categories
         [HttpPost]
+        [ValidateModelAtribute]
         public async Task<IActionResult> Create([FromBody] AddRequestCategories addRequestCategories)
         {
             //Map or convert DTO to domain Model
@@ -87,8 +95,10 @@ namespace UsedBookStore.Controllers
             //{
             //    Name = addRequestCategories.Name,
             //};
+            //if (ModelState.IsValid)
+            //{
 
-            var categoriesDomainModel = mapper.Map<Categories>(addRequestCategories);
+                var categoriesDomainModel = mapper.Map<Categories>(addRequestCategories);
 
 
             // use Domain Modal to create Categories
@@ -108,6 +118,8 @@ namespace UsedBookStore.Controllers
             //};
 
             return CreatedAtAction(nameof(GetById), new { id = categoriesDto.Id }, categoriesDto);
+            //}
+            //else { return BadRequest(ModelState); }
         }
 
         //Update region

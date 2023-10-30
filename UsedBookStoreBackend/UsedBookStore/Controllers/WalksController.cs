@@ -8,9 +8,6 @@ using UsedBookStore.DataAccess.Repositories;
 
 namespace UsedBookStore.Controllers
 {
-
-
-
     // /api/walks
     [Route("api/[controller]")]
     [ApiController]
@@ -66,6 +63,36 @@ namespace UsedBookStore.Controllers
             // map domain model to dto
             return Ok(mapper.Map<WalkDto>(walkDomainModel));
         }
+        // update Walk By Id
+        // PUT : /api/Walks/{id}
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, UpdateWalkDto updateWalkDto)
+        {
+            // map dto to domain model
+            var walkDomainModel = mapper.Map<Walk>(updateWalkDto);
 
+            walkDomainModel =  await walkRepositories.UpdateAsync(id, walkDomainModel);
+
+            if(walkDomainModel == null) { return NotFound(); }
+
+            //map domain model to dto
+
+            return Ok(mapper.Map<WalkDto>(walkDomainModel));
+        }
+        [HttpDelete]
+        // delete : /api/Delete/{id}
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var deleteWalkDomainModel = await walkRepositories.DeleteAsync(id);
+            if (deleteWalkDomainModel == null) 
+            { 
+            return NotFound();
+            }
+
+            // map domain model to dto
+            return Ok(mapper.Map<WalkDto>(deleteWalkDomainModel));
+        }
     }
 }
