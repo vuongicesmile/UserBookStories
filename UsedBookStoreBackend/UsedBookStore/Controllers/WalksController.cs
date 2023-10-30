@@ -37,11 +37,11 @@ namespace UsedBookStore.Controllers
         }
 
         // Get Walks
-        // GET : /api/walks
+        // GET : /api/walks?filterOn=Name&FilterQuery=Track
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery)
         {
-            var walkDomainModel = await walkRepositories.GetAllAsync();
+            var walkDomainModel = await walkRepositories.GetAllAsync(filterOn, filterQuery);
 
             // map domain model to dto
             return Ok(mapper.Map<List<WalkDto>>(walkDomainModel));

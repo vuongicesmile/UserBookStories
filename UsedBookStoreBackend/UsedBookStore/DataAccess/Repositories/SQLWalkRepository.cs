@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Dynamic.Core;
 using UsedBookStore.DataAccess.Contexts;
 using UsedBookStore.DataAccess.Entities;
 
@@ -31,10 +32,25 @@ namespace UsedBookStore.DataAccess.Repositories
             return existingWalk;   
         }
 
-        public async Task<List<Walk>> GetAllAsync()
+        //public async Task<List<Walk>> GetAllAsync()
+        //{
+        //    // phuong thuc ToListAsync : get toan bo categories
+        //    return await efContext.Walks.Include("Difficulty").ToListAsync();
+        //}
+
+        public async Task<List<Walk>> GetAllAsync(string? filterOn = null, string? filterQuery = null)
         {
-            // phuong thuc ToListAsync : get toan bo categories
-            return await efContext.Walks.Include("Difficulty").ToListAsync();
+            var walks = efContext.Walks.Include("Difficulty").AsQueryable();
+            // Filtering
+            if(string.IsNullOrWhiteSpace(filterOn) == false && string.IsNullOrWhiteSpace(filterQuery) == false)
+            {
+                if(filterOn.Equals("Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    walks = walks.Where(x => x.Name.Contains(filterQuery));
+                }
+            }
+
+            return await walks.ToListAsync();
         }
 
         public async Task<Walk?> GetByIdAsync(Guid id)
