@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ namespace UsedBookStore.Controllers
 {
     // /api/walks
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class WalksController : ControllerBase
     {
