@@ -5,7 +5,7 @@ namespace UsedBookStore.DataAccess.Contexts
 {
     public class EfContext: DbContext
     {
-        public EfContext(DbContextOptions options) : base(options)
+        public EfContext(DbContextOptions<EfContext> options) : base(options)
         {
         }
         public DbSet<Product> Products { get; set; }

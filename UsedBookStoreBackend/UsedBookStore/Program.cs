@@ -23,6 +23,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<EfContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("EfContextConnectionStrings")));
 
+builder.Services.AddDbContext<EfAuthContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("EfContextAuthConnectionStrings")));
 
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
