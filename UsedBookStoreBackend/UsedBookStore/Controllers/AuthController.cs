@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using UsedBookStore.DataAccess.DTOs;
+using UsedBookStore.DataAccess.Repositories;
 
 namespace UsedBookStore.Controllers
 {
@@ -11,10 +12,12 @@ namespace UsedBookStore.Controllers
     public class AuthController : ControllerBase
     {
         private readonly UserManager<IdentityUser> userManager;
+        private readonly ITokenRepository tokenRepository;
 
-        public AuthController(UserManager<IdentityUser> userManager) 
+        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenRepository) 
         {
             this.userManager = userManager;
+            this.tokenRepository = tokenRepository;
         }
 
         //POST : /api/Auth/Register
@@ -60,8 +63,21 @@ namespace UsedBookStore.Controllers
             
             if(checkPasswordResult)
                 {
-                    // Create Token
-                    return Ok();
+                    // the controller should be lean and the functionally to create token
+                    //get roles for this user
+                    var roles = await userManager.GetRolesAsync(user);
+                    if(roles != null)
+                    {
+                        // Create Token
+                        var jwtToken = tokenRepository.CreateJWTToken(user, roles.ToList());
+
+                        var response = new LoginRepositoryDto
+                        {
+                            JwtToken = jwtToken,
+
+                        };
+                        return Ok(jwtToken);
+                    }
                 }
             }
             return BadRequest("Username or password incrrect");

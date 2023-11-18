@@ -26,6 +26,8 @@ namespace UsedBookStore.Controllers
         // Create Walk
         //POST: /api/walks
         [HttpPost]
+        [Authorize]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> Create([FromBody] AddRequestWalksDto addRequestWalksDto)
         {
             //map DTO to Domain Model
@@ -41,6 +43,7 @@ namespace UsedBookStore.Controllers
         // Get Walks
         // GET : /api/walks?filterOn=Name&FilterQuery=Track&sortBy=Name&isAscending=true&pageNumber=1&pageSize=10
         [HttpGet]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll([FromQuery] string? filterOn,
             [FromQuery] string? filterQuery,
             [FromQuery] string? sortBy,
@@ -59,6 +62,8 @@ namespace UsedBookStore.Controllers
         // Get : /api/Walks/{id}
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
             var walkDomainModel = await walkRepositories.GetByIdAsync(id);
@@ -75,6 +80,8 @@ namespace UsedBookStore.Controllers
         // PUT : /api/Walks/{id}
         [HttpPut]
         [Route("{id:Guid}")]
+        [Authorize]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, UpdateWalkDto updateWalkDto)
         {
             // map dto to domain model
@@ -91,6 +98,8 @@ namespace UsedBookStore.Controllers
         [HttpDelete]
         // delete : /api/Delete/{id}
         [Route("{id:Guid}")]
+        [Authorize]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var deleteWalkDomainModel = await walkRepositories.DeleteAsync(id);
