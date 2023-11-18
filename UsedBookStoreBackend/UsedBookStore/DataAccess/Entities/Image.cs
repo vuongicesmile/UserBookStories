@@ -11,7 +11,7 @@ namespace UsedBookStore.DataAccess.Entities
         // because we are not going to store this file inside db
         // we are going to add a atribute to this which will be not mapped
         [NotMapped]
-        public IFormFile file { get; set; }
+        public IFormFile File { get; set; }
         public string FileName { get; set; }
         public string? FileDescription { get; set; }
         public string FileExtension { get; set; }
