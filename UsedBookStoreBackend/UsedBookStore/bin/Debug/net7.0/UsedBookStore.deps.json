@@ -26,6 +26,7 @@
           "Serilog": "2.12.0",
           "Serilog.AspNetCore": "6.1.0",
           "Serilog.Sinks.Console": "4.1.0",
+          "Serilog.Sinks.File": "5.0.0",
           "Swashbuckle.AspNetCore": "6.5.0",
           "System.IdentityModel.Tokens.Jwt": "7.0.3",
           "System.Linq.Dynamic.Core": "1.3.5",

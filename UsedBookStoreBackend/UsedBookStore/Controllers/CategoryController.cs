@@ -37,6 +37,7 @@ namespace UsedBookStore.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            throw new Exception("this is bug");
             logger.LogInformation("get informationddddddd");
             // Get Data from Database - Domain models
             //var categoriesDomain =await dbContext.Categories.ToListAsync();
