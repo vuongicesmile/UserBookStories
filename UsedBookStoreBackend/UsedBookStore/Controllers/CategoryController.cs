@@ -128,6 +128,10 @@ namespace UsedBookStore.Controllers
             //    Name = categoriesDomainModel.Name,
             //};
 
+            // create an exception
+            throw new Exception("11");
+
+
             return CreatedAtAction(nameof(GetById), new { id = categoriesDto.Id }, categoriesDto);
             //}
             //else { return BadRequest(ModelState); }
