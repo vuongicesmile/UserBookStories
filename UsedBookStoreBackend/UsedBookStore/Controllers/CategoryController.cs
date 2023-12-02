@@ -3,6 +3,7 @@ using Faker;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using UsedBookStore.CustomActionFilter;
 using UsedBookStore.DataAccess.Contexts;
 using UsedBookStore.DataAccess.DTOs;
@@ -18,17 +19,25 @@ namespace UsedBookStore.Controllers
         private readonly EfContext dbContext;
         private readonly ICategoriesRepository categoriesRepository;
         private readonly IMapper mapper;
-        public CategoryController(EfContext dbContext, ICategoriesRepository categoriesRepository, IMapper mapper)
+        private readonly ILogger<CategoryController> logger;
+
+        public CategoryController(EfContext dbContext,
+            ICategoriesRepository categoriesRepository,
+            IMapper mapper,
+            ILogger<CategoryController> logger
+            )
         {
             this.dbContext = dbContext;
             this.categoriesRepository = categoriesRepository;
             this.mapper = mapper;
+            this.logger = logger;
         }
         // GET ALL CATEGORIES
         // GET : https://localhost://portnumber/api/category
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            logger.LogInformation("get informationddddddd");
             // Get Data from Database - Domain models
             //var categoriesDomain =await dbContext.Categories.ToListAsync();
 
@@ -52,6 +61,7 @@ namespace UsedBookStore.Controllers
 
                 var categoriesDomain = await categoriesRepository.GetAllAsync();
                 // Return Dtos
+                logger.LogInformation($"finished : {JsonSerializer.Serialize(categoriesDomain)} ");
                 return Ok(mapper.Map<List<CategoriesDTO>>(categoriesDomain));
             }
             else { return BadRequest(ModelState); }
