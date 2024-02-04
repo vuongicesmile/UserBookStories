@@ -52,6 +52,10 @@
               "target": "Package",
               "version": "[8.0.0, )"
             },
+            "CloudinaryDotNet": {
+              "target": "Package",
+              "version": "[1.25.0, )"
+            },
             "Faker.Net": {
               "target": "Package",
               "version": "[2.0.154, )"

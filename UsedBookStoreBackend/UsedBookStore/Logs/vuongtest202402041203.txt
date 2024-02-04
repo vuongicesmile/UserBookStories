@@ -1,0 +1,48 @@
+2024-02-04 12:03:13.817 +07:00 [INF] User profile is available. Using 'C:\Users\Admin\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2024-02-04 12:03:14.026 +07:00 [INF] Now listening on: https://localhost:7143
+2024-02-04 12:03:14.028 +07:00 [INF] Now listening on: http://localhost:5090
+2024-02-04 12:03:14.030 +07:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-02-04 12:03:14.031 +07:00 [INF] Hosting environment: Development
+2024-02-04 12:03:14.032 +07:00 [INF] Content root path: D:\Coder\Code\UserBookStories\UsedBookStoreBackend\UsedBookStore
+2024-02-04 12:03:14.705 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7143/swagger - -
+2024-02-04 12:03:14.784 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7143/swagger - - - 301 0 - 71.3666ms
+2024-02-04 12:03:14.793 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7143/swagger/index.html - -
+2024-02-04 12:03:15.000 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7143/swagger/index.html - - - 200 - text/html;charset=utf-8 206.5505ms
+2024-02-04 12:03:15.002 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7143/swagger/swagger-ui.css - -
+2024-02-04 12:03:15.003 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7143/_framework/aspnetcore-browser-refresh.js - -
+2024-02-04 12:03:15.002 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7143/swagger/swagger-ui-bundle.js - -
+2024-02-04 12:03:15.002 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7143/swagger/swagger-ui-standalone-preset.js - -
+2024-02-04 12:03:15.014 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7143/_framework/aspnetcore-browser-refresh.js - - - 200 12358 application/javascript;+charset=utf-8 11.3344ms
+2024-02-04 12:03:15.038 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7143/_vs/browserLink - -
+2024-02-04 12:03:15.039 +07:00 [INF] Sending file. Request path: '/swagger-ui-standalone-preset.js'. Physical path: 'N/A'
+2024-02-04 12:03:15.039 +07:00 [INF] Sending file. Request path: '/swagger-ui.css'. Physical path: 'N/A'
+2024-02-04 12:03:15.042 +07:00 [INF] Sending file. Request path: '/swagger-ui-bundle.js'. Physical path: 'N/A'
+2024-02-04 12:03:15.043 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7143/swagger/swagger-ui-standalone-preset.js - - - 200 312163 text/javascript 40.1655ms
+2024-02-04 12:03:15.048 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7143/swagger/swagger-ui-bundle.js - - - 200 1061536 text/javascript 45.8904ms
+2024-02-04 12:03:15.044 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7143/swagger/swagger-ui.css - - - 200 144929 text/css 41.3180ms
+2024-02-04 12:03:15.070 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7143/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 31.5344ms
+2024-02-04 12:03:15.249 +07:00 [INF] Request starting HTTP/2 GET https://localhost:7143/swagger/v1/swagger.json - -
+2024-02-04 12:03:15.517 +07:00 [INF] Request finished HTTP/2 GET https://localhost:7143/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 268.6293ms
+2024-02-04 12:03:29.894 +07:00 [INF] Request starting HTTP/2 POST https://localhost:7143/api/Photo multipart/form-data;+boundary=----WebKitFormBoundary97BA3z7BFUx9vJ7M 5904176
+2024-02-04 12:03:30.838 +07:00 [INF] Executing endpoint 'UsedBookStore.Controllers.PhotoController.Add (UsedBookStore)'
+2024-02-04 12:03:30.883 +07:00 [INF] Route matched with {action = "Add", controller = "Photo"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Add(UsedBookStore.DataAccess.DTOs.ImageUploadRequestDto) on controller UsedBookStore.Controllers.PhotoController (UsedBookStore).
+2024-02-04 12:03:31.172 +07:00 [INF] Executed action UsedBookStore.Controllers.PhotoController.Add (UsedBookStore) in 282.2401ms
+2024-02-04 12:03:31.208 +07:00 [INF] Executed endpoint 'UsedBookStore.Controllers.PhotoController.Add (UsedBookStore)'
+2024-02-04 12:03:31.273 +07:00 [ERR] 18f9d30a-c4c9-4a29-af03-081c7bbc6b74 : The method or operation is not implemented.
+System.NotImplementedException: The method or operation is not implemented.
+   at UsedBookStore.DataAccess.Repositories.SQLPhotoAccessor.Upload(Image image) in D:\Coder\Code\UserBookStories\UsedBookStoreBackend\UsedBookStore\DataAccess\Repositories\SQLPhotoAccessor.cs:line 54
+   at UsedBookStore.Controllers.PhotoController.Add(ImageUploadRequestDto request) in D:\Coder\Code\UserBookStories\UsedBookStoreBackend\UsedBookStore\Controllers\PhotoController.cs:line 38
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Logged|17_1(ResourceInvoker invoker)
+   at Microsoft.AspNetCore.Routing.EndpointMiddleware.<Invoke>g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at UsedBookStore.Middlewares.ExceptionHandleMiddleware.InvokeAsync(HttpContext httpContext) in D:\Coder\Code\UserBookStories\UsedBookStoreBackend\UsedBookStore\Middlewares\ExceptionHandleMiddleware.cs:line 26
+2024-02-04 12:03:31.435 +07:00 [INF] Request finished HTTP/2 POST https://localhost:7143/api/Photo multipart/form-data;+boundary=----WebKitFormBoundary97BA3z7BFUx9vJ7M 5904176 - 500 - application/json;+charset=utf-8 1540.9619ms

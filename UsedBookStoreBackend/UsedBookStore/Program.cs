@@ -13,6 +13,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.FileProviders;
 using Serilog;
 using UsedBookStore.Middlewares;
+using UsedBookStore.DataAccess.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,13 +78,14 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("EfContextAuthCon
 
 builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-
 builder.Services.AddScoped<ICategoriesRepository, SQLCategoriesRepository>();
 builder.Services.AddScoped<IWalkRepositories, SQLWalkRepository>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<IImageRepository, LocalImageRepository>();
 
-
+//cloudinary
+builder.Services.AddScoped<IPhotoAccessor, SQLPhotoAccessor>();
+builder.Services.Configure<CloudinarySetting>(builder.Configuration.GetSection("Cloudinary"));
 
 // automapper config
 //inject auto mapper config
@@ -120,7 +122,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -41,12 +41,8 @@ namespace UsedBookStore.DataAccess.Contexts
                     Name= "Hard",
                 },
             };
-
             // Seed difficulties to the datatbase
             modelBuilder.Entity<Difficulty>().HasData(difficulties);
-
         }
-
-
     }
 }

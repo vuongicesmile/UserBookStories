@@ -116,3 +116,4 @@ D:\Coder\Code\UserBookStories\UsedBookStoreBackend\UsedBookStore\bin\Debug\net7.
 D:\Coder\Code\UserBookStories\UsedBookStoreBackend\UsedBookStore\bin\Debug\net7.0\Serilog.Sinks.Console.dll
 D:\Coder\Code\UserBookStories\UsedBookStoreBackend\UsedBookStore\bin\Debug\net7.0\Serilog.Sinks.Debug.dll
 D:\Coder\Code\UserBookStories\UsedBookStoreBackend\UsedBookStore\bin\Debug\net7.0\Serilog.Sinks.File.dll
+D:\Coder\Code\UserBookStories\UsedBookStoreBackend\UsedBookStore\bin\Debug\net7.0\CloudinaryDotNet.dll

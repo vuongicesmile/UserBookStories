@@ -20,6 +20,11 @@ namespace UsedBookStore.DataAccess.Repositories
             this.dbContext = dbContext;
         }
 
+        public Task<string> DeletePhoto(string publicId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Image> Upload(Image image)
         {
             var localFilePath = Path.Combine(webHostEnvironment.ContentRootPath, "Images",
@@ -40,5 +45,16 @@ namespace UsedBookStore.DataAccess.Repositories
             return image;
         }
 
+        public Task<Image> Upload(IFormFile file)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IImageRepository.Upload(Image imageDomainModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        
     }
 }
